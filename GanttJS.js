@@ -1,35 +1,56 @@
 /*Canvas Grid Test*/
 console.log("in script");
-//canvas width
-var cw = 0;
-//canvas real width
-var crw = 0;
-//canvas height
-var ch = 0;
-//canvas real height
-var crh = 0;
-//canvas border
-var cm = 5;
-//scale header
-var head = 30;
 
-var MONTHS = new Array(new Array("Janurary", 31), new Array("Feburary", 28), new Array("March", 31), new Array("April", 30), new Array("May", 31), new Array("June", 30), new Array("July", 31), new Array("August", 31), new Array("September", 30), new Array("October", 31), new Array("November", 30), new Array("December", 31));
+//create global namespace
+var GJSsettings, GanttJS = {
 
-var WEEKS = new Array("Wk 1", "Wk 2", "Wk 3", "Wk 4");
+    settings: {
+        theme: "standard",
+        container: $("#GanttJS"),
+        db: null
+    },
 
-var DAYS = new Array("Su", "M", "Tu", "W", "Th", "F", "Sa");
+    globals: {
+        //canvas width
+        cw: 0,
+        //canvas real width
+        crw: 0,
+        //canvas height
+        ch: 0,
+        //canvas real height
+        crh: 0,
+        //canvas margin (border)
+        cm: 0,
+        //header
+        head: 30,
+        //static month data
+        MONTHS: [["Janurary", 31], ["Feburary", 28], ["March", 31], ["April", 30], ["May", 31], ["June", 30], ["July", 31], ["August", 31], ["September", 30], ["October", 31], ["November", 30], ["December", 31]],
+        //static week data
+        WEEKS: ["Wk 1", "Wk 2", "Wk 3", "Wk 4"],
+        //static day data
+        DAYS: ["Su", "M", "Tu", "W", "Th", "F", "Sa"]
+
+    },
+
+    init: function() {
+        GJSsettings = this.settings;
+        //TODO: build UI
+        //TODO: bind UI actions
+    }
+
+};
 
 //CONSTANTS
-var WEEK_UNIT = 12;
-var MONTH_UNIT = 12;
-var QUARTER_UNIT = 12;
+GanttJS.WEEK_UNIT = 12;
+GanttJS.MONTH_UNIT = 12;
+GanttJS.QUARTER_UNIT = 12;
 
 //GLOBAL NAVIGATION
-var pos = "";
-var dCNT = 0;
-var wCNT = 0;
-var mCNT = 0;
-var qCNT = 0;
+GanttJS.pos = "";
+GanttJS.dCNT = 0;
+GanttJS.wCNT = 0;
+GanttJS.mCNT = 0;
+GanttJS.qCNT = 0;
 
 
 window.onload=function() { init(); }

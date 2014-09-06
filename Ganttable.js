@@ -2,11 +2,11 @@
 console.log("in script");
 
 //create global namespace
-var GJSsettings, GanttJS = {
+var Gsettings, Ganttable = {
 
     settings: {
         theme: "standard",
-        container: $("#GanttJS"),
+        container: $("#Ganttable"),
         db: null
     },
 
@@ -33,7 +33,7 @@ var GJSsettings, GanttJS = {
     },
 
     init: function() {
-        GJSsettings = this.settings;
+        Gsettings = this.settings;
         //TODO: build UI
         //TODO: bind UI actions
     }

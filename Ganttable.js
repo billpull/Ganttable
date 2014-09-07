@@ -6,8 +6,37 @@ var Gsettings, Ganttable = {
 
     settings: {
         theme: "standard",
-        container: $("#Ganttable"),
+        container: null,
         db: null
+    },
+
+    constants: {
+        //static month data
+        MONTHS: [
+            ["Janurary", 31],
+            ["Feburary", 28],
+            ["March", 31],
+            ["April", 30],
+            ["May", 31],
+            ["June", 30],
+            ["July", 31],
+            ["August", 31],
+            ["September", 30],
+            ["October", 31],
+            ["November", 30],
+            ["December", 31]
+        ],
+        //static week data
+        WEEKS: ["Wk 1", "Wk 2", "Wk 3", "Wk 4"],
+        //static day data
+        DAYS: ["Su", "M", "Tu", "W", "Th", "F", "Sa"],
+        //Unit Enum
+        UnitEnum: {WEEK_UNIT: 12, MONTH_UNIT: 12, QUARTER_UNIT: 12},
+        //Context Enum
+        ContextEnum: {DAY: 0, WEEK: 1, MONTH: 2, QUARTER: 3},
+
+        VERSION: "1.0.0"
+
     },
 
     globals: {
@@ -23,46 +52,193 @@ var Gsettings, Ganttable = {
         cm: 0,
         //header
         head: 30,
-        //static month data
-        MONTHS: [["Janurary", 31], ["Feburary", 28], ["March", 31], ["April", 30], ["May", 31], ["June", 30], ["July", 31], ["August", 31], ["September", 30], ["October", 31], ["November", 30], ["December", 31]],
-        //static week data
-        WEEKS: ["Wk 1", "Wk 2", "Wk 3", "Wk 4"],
-        //static day data
-        DAYS: ["Su", "M", "Tu", "W", "Th", "F", "Sa"]
+        //last menu option selected
+        lastMenu: null
 
     },
 
-    init: function() {
-        Gsettings = this.settings;
+    nav: {
+        //Current gantt timeline context
+        context: null,
+        //Current day count past current
+        dCnt: 0,
+        //Current week count past current
+        wCnt: 0,
+        //Current month count past current
+        mCnt: 0,
+        //Current quarter count past current
+        qCnt: 0
+    },
+
+    init: function () {
+        console.log("init");
+
+        this.container = $("#Ganttable")[0];
+
+        //setup container UI
+        this.setupUI();
+
+        //this.setupGantt();
+
+        //Gsettings = this.settings;
+
         //TODO: build UI
         //TODO: bind UI actions
+    },
+
+    setupUI: function () {
+        console.log("setting up UI");
+
+        //set margin of main container
+        //this.container.style.margin = "2px";
+        //set width of main container
+        this.container.style.width = "100%";
+        this.container.style.margin = "0px";
+
+        //append gantt grid
+        var grid = document.createElement("table");
+
+        grid.style.border = 1;
+        grid.style.width = "100%";
+
+        //row for the entire menu bar
+        var menubar = document.createElement("tr");
+        menubar.id = "menubar";
+        menubar.style.width = "100%";
+        menubar.style.height = "20px";
+
+        //logo column
+        var logo = document.createElement("td");
+        logo.id = "logo";
+        logo.style.backgroundColor = "Black";
+        logo.style.width = "100px";
+        logo.innerHTML = "Ganttable";
+        logo.style.color = "White";
+        logo.style.textAlign = "Center";
+        logo.style.fontStyle = "italic";
+
+        //file menubar option + actual menu
+        var file = document.createElement("td");
+        file.id = "file";
+        file.style.backgroundColor = "Black";
+        file.style.width = "60px";
+        file.innerHTML = "File";
+        file.style.color = "White";
+        file.style.textAlign = "Center";
+
+        var file_menu = document.createElement("div");
+        file_menu.style.visibility = "hidden";
+        file_menu.style.position = "absolute";
+        file_menu.style.margin = "0px";
+        file_menu.style.padding = "0px";
+        file_menu.style.backgroundColor = "#EAEBD8";
+        file_menu.style.border = "1px solid #5970B2";
+        file_menu.style.textAlign = "left";
+        file_menu.style.display = "block";
+        file_menu.style.whiteSpace = "nowrap";
+        file_menu.id = "file_menu";
+
+        var file_list = document.createElement("ul");
+        file_list.style.listStyle = "none";
+        file_list.style.margin = "5px";
+        file_list.style.padding = "0px";
+        file_list.id = "file_list";
+
+        var new_option = document.createElement("li");
+        new_option.innerHTML = "New";
+        new_option.id = "file_new";
+
+        var open_option = document.createElement("li");
+        open_option.innerHTML = "Open";
+        open_option.id = "file_open";
+
+        file_list.appendChild(new_option);
+        file_list.appendChild(open_option);
+
+        file_menu.appendChild(file_list);
+
+        file.appendChild(file_menu);
+
+        //edit menubar option + actual menu
+        var edit = document.createElement("td");
+        edit.id = "edit";
+        edit.style.backgroundColor = "Black";
+        edit.style.width = "60px";
+        edit.innerHTML = "Edit";
+        edit.style.color = "White";
+        edit.style.textAlign = "Center";
+
+        var tools = document.createElement("td");
+        tools.id = "tools";
+        tools.style.backgroundColor = "Black";
+        tools.style.width = "60px";
+        tools.innerHTML = "Tools";
+        tools.style.color = "White";
+        tools.style.textAlign = "Center";
+
+        var help = document.createElement("td");
+        help.id = "about";
+        help.style.backgroundColor = "Black";
+        help.style.width = "60px";
+        help.innerHTML = "Help";
+        help.style.color = "White";
+        help.style.textAlign = "Center";
+
+        var devoid = document.createElement("td");
+        devoid.id = "devoid";
+        devoid.style.backgroundColor = "Black";
+        devoid.style.width = "auto";
+
+        file.onmouseover = function() { Ganttable.showMenu(file_menu.id); };
+        file.onmouseout = function() { Ganttable.hideMenu(); };
+
+        menubar.appendChild(logo);
+        menubar.appendChild(file);
+        menubar.appendChild(edit);
+        menubar.appendChild(tools);
+        menubar.appendChild(help);
+        menubar.appendChild(devoid);
+
+        grid.appendChild(menubar);
+
+        //append the grid to the Ganttable div
+        this.container.appendChild(grid);
+
+        //set offsets
+        this.globals.cw = this.container.offsetWidth;
+        this.globals.ch = this.container.offsetHeight;
+    },
+
+    showMenu: function(id){
+        if(id) {
+            console.log("mousing over: " + id);
+
+            if (this.globals.lastMenu) {
+                this.globals.lastMenu.style.visibility = "hidden";
+            }
+
+            this.globals.lastMenu = document.getElementById(id);
+            this.globals.lastMenu.style.visibility = "visible";
+
+        } else { console.log("No id passed to showMenu"); }
+    },
+
+    hideMenu: function() {
+        if(this.globals.lastMenu) { this.globals.lastMenu.style.visibility = "hidden"; }
     }
 
 };
 
-//CONSTANTS
-GanttJS.WEEK_UNIT = 12;
-GanttJS.MONTH_UNIT = 12;
-GanttJS.QUARTER_UNIT = 12;
+window.onload=function() { Ganttable.init(); };
 
-//GLOBAL NAVIGATION
-GanttJS.pos = "";
-GanttJS.dCNT = 0;
-GanttJS.wCNT = 0;
-GanttJS.mCNT = 0;
-GanttJS.qCNT = 0;
-
-
-window.onload=function() { init(); }
-
-function init(){
+/*function init(){
     //var canvas = document.getElementById("canvas");
     //var context = canvas.getContext("2d");
     setLayout();
     resetScaleCell();
     setScaleSubDay(new Date().getMonth(), new Date().getFullYear());
     setScaleDay(new Date().getMonth(), new Date().getFullYear());
-    pos = "d"
+    pos = "d";
     console.log('init completed');
 }
 
@@ -377,3 +553,5 @@ function setScaleMonth(y){
 function setScaleQuarter(y){
 //TODO scale for the quarter of a given year
 }
+
+*/

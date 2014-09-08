@@ -1,4 +1,4 @@
-/*Canvas Grid Test*/
+/*Canvas Grid Test1*/
 console.log("in script");
 
 //create global namespace

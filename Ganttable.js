@@ -130,38 +130,73 @@ var Gsettings, Ganttable = {
         file_menu.style.visibility = "hidden";
         file_menu.style.position = "absolute";
         file_menu.style.margin = "0px";
+        file_menu.style.marginTop = "1px";
+        file_menu.style.marginLeft = "-1px";
         file_menu.style.padding = "0px";
-        file_menu.style.backgroundColor = "#EAEBD8";
-        file_menu.style.border = "1px solid #5970B2";
-        file_menu.style.textAlign = "left";
-        file_menu.style.display = "block";
-        file_menu.style.whiteSpace = "nowrap";
+        file_menu.style.backgroundColor = "Gray";
         file_menu.id = "file_menu";
 
-        var file_list = document.createElement("ul");
-        file_list.style.listStyle = "none";
-        file_list.style.margin = "5px";
-        file_list.style.padding = "0px";
+        var file_list = document.createElement("table");
         file_list.id = "file_list";
+        file_list.style.color = "White";
+        file_list.style.width = "100%";
+        file_list.style.border = "none";
+        file_list.style.borderSpacing = "0px";
 
         //TBD
-        var file_option_1 = document.createElement("li");
+        var file_option_1 = document.createElement("td");
         file_option_1.innerHTML = "Item 1";
         file_option_1.id = "file_option_1";
+        file_option_1.style.padding = "5px";
+        file_option_1.onmouseover = function() {
+            file_option_1.style.color = "Black";
+            file_option_1.style.backgroundColor = "LightGray";
+        };
+        file_option_1.onmouseout = function() {
+            file_option_1.style.color = "White";
+            file_option_1.style.backgroundColor = "Gray";
+        };
 
         //TBD
-        var file_option_2 = document.createElement("li");
+        var file_option_2 = document.createElement("td");
         file_option_2.innerHTML = "Item 2";
         file_option_2.id = "file_option_2";
+        file_option_2.style.padding = "5px";
+        file_option_2.onmouseover = function() {
+            file_option_2.style.color = "Black";
+            file_option_2.style.backgroundColor = "LightGray";
+        };
+        file_option_2.onmouseout = function() {
+            file_option_2.style.color = "White";
+            file_option_2.style.backgroundColor = "Gray";
+        };
 
         //TBD
-        var file_option_3 = document.createElement("li");
+        var file_option_3 = document.createElement("td");
         file_option_3.innerHTML = "Item 3";
         file_option_3.id = "file_option_3";
+        file_option_3.style.padding = "5px";
+        file_option_3.onmouseover = function() {
+            file_option_3.style.color = "Black";
+            file_option_3.style.backgroundColor = "LightGray";
+        };
+        file_option_3.onmouseout = function() {
+            file_option_3.style.color = "White";
+            file_option_3.style.backgroundColor = "Gray";
+        };
 
-        file_list.appendChild(file_option_1);
-        file_list.appendChild(file_option_2);
-        file_list.appendChild(file_option_3);
+        var file_row_1 = document.createElement("tr");
+        file_row_1.appendChild(file_option_1);
+
+        var file_row_2 = document.createElement("tr");
+        file_row_2.appendChild(file_option_2);
+
+        var file_row_3 = document.createElement("tr");
+        file_row_3.appendChild(file_option_3);
+
+        file_list.appendChild(file_row_1);
+        file_list.appendChild(file_row_2);
+        file_list.appendChild(file_row_3);
 
         file_menu.appendChild(file_list);
 
@@ -180,38 +215,74 @@ var Gsettings, Ganttable = {
         edit_menu.style.visibility = "hidden";
         edit_menu.style.position = "absolute";
         edit_menu.style.margin = "0px";
+        edit_menu.style.marginTop = "1px";
+        edit_menu.style.marginLeft = "-1px";
         edit_menu.style.padding = "0px";
-        edit_menu.style.backgroundColor = "#EAEBD8";
-        edit_menu.style.border = "1px solid #5970B2";
-        edit_menu.style.textAlign = "left";
-        edit_menu.style.display = "block";
-        edit_menu.style.whiteSpace = "nowrap";
+        edit_menu.style.backgroundColor = "Gray";
         edit_menu.id = "edit_menu";
 
-        var edit_list = document.createElement("ul");
-        edit_list.style.listStyle = "none";
-        edit_list.style.margin = "5px";
-        edit_list.style.padding = "0px";
+        var edit_list = document.createElement("table");
         edit_list.id = "edit_list";
+        edit_list.style.color = "White";
+        edit_list.style.width = "100%";
+        edit_list.style.border = "none";
+        edit_list.style.borderSpacing = "0px";
 
         //TBD
-        var edit_option_1 = document.createElement("li");
+        var edit_option_1 = document.createElement("td");
         edit_option_1.innerHTML = "Item 1";
         edit_option_1.id = "edit_option_1";
+        edit_option_1.style.padding = "5px";
+        edit_option_1.onmouseover = function() {
+            edit_option_1.style.color = "Black";
+            edit_option_1.style.backgroundColor = "LightGray";
+        };
+        edit_option_1.onmouseout = function() {
+            edit_option_1.style.color = "White";
+            edit_option_1.style.backgroundColor = "Gray";
+        };
+
 
         //TBD
-        var edit_option_2 = document.createElement("li");
+        var edit_option_2 = document.createElement("td");
         edit_option_2.innerHTML = "Item 2";
         edit_option_2.id = "edit_option_2";
+        edit_option_2.style.padding = "5px";
+        edit_option_2.onmouseover = function() {
+            edit_option_2.style.color = "Black";
+            edit_option_2.style.backgroundColor = "LightGray";
+        };
+        edit_option_2.onmouseout = function() {
+            edit_option_2.style.color = "White";
+            edit_option_2.style.backgroundColor = "Gray";
+        };
 
         //TBD
-        var edit_option_3 = document.createElement("li");
+        var edit_option_3 = document.createElement("td");
         edit_option_3.innerHTML = "Item 3";
         edit_option_3.id = "edit_option_3";
+        edit_option_3.style.padding = "5px";
+        edit_option_3.onmouseover = function() {
+            edit_option_3.style.color = "Black";
+            edit_option_3.style.backgroundColor = "LightGray";
+        };
+        edit_option_3.onmouseout = function() {
+            edit_option_3.style.color = "White";
+            edit_option_3.style.backgroundColor = "Gray";
+        };
 
-        edit_list.appendChild(edit_option_1);
-        edit_list.appendChild(edit_option_2);
-        edit_list.appendChild(edit_option_3);
+        var edit_row_1 = document.createElement("tr");
+        edit_row_1.appendChild(edit_option_1);
+
+        var edit_row_2 = document.createElement("tr");
+        edit_row_2.appendChild(edit_option_2);
+
+        var edit_row_3 = document.createElement("tr");
+        edit_row_3.appendChild(edit_option_3);
+
+        edit_list.appendChild(edit_row_1);
+        edit_list.appendChild(edit_row_2);
+        edit_list.appendChild(edit_row_3);
 
         edit_menu.appendChild(edit_list);
 
@@ -229,38 +300,73 @@ var Gsettings, Ganttable = {
         tools_menu.style.visibility = "hidden";
         tools_menu.style.position = "absolute";
         tools_menu.style.margin = "0px";
+        tools_menu.style.marginTop = "1px";
+        tools_menu.style.marginLeft = "-1px";
         tools_menu.style.padding = "0px";
-        tools_menu.style.backgroundColor = "#EAEBD8";
-        tools_menu.style.border = "1px solid #5970B2";
-        tools_menu.style.textAlign = "left";
-        tools_menu.style.display = "block";
-        tools_menu.style.whiteSpace = "nowrap";
+        tools_menu.style.backgroundColor = "Gray";
         tools_menu.id = "tools_menu";
 
-        var tools_list = document.createElement("ul");
-        tools_list.style.listStyle = "none";
-        tools_list.style.margin = "5px";
-        tools_list.style.padding = "0px";
+        var tools_list = document.createElement("table");
         tools_list.id = "tools_list";
+        tools_list.style.color = "White";
+        tools_list.style.width = "100%";
+        tools_list.style.border = "none";
+        tools_list.style.borderSpacing = "0px";
 
         //TBD
-        var tools_option_1 = document.createElement("li");
+        var tools_option_1 = document.createElement("td");
         tools_option_1.innerHTML = "Item 1";
         tools_option_1.id = "tools_option_1";
+        tools_option_1.style.padding = "5px";
+        tools_option_1.onmouseover = function() {
+            tools_option_1.style.color = "Black";
+            tools_option_1.style.backgroundColor = "LightGray";
+        };
+        tools_option_1.onmouseout = function() {
+            tools_option_1.style.color = "White";
+            tools_option_1.style.backgroundColor = "Gray";
+        };
+
+        var tools_row_1 = document.createElement("tr");
+        tools_row_1.appendChild(tools_option_1);
 
         //TBD
-        var tools_option_2 = document.createElement("li");
+        var tools_option_2 = document.createElement("td");
         tools_option_2.innerHTML = "Item 2";
         tools_option_2.id = "tools_option_2";
+        tools_option_2.style.padding = "5px";
+        tools_option_2.onmouseover = function(){
+            tools_option_2.style.color = "Black";
+            tools_option_2.style.backgroundColor = "LightGray";
+        };
+        tools_option_2.onmouseout = function() {
+            tools_option_2.style.color = "White";
+            tools_option_2.style.backgroundColor = "Gray";
+        };
+
+        var tools_row_2 = document.createElement("tr");
+        tools_row_2.appendChild(tools_option_2);
 
         //TBD
-        var tools_option_3 = document.createElement("li");
+        var tools_option_3 = document.createElement("td");
         tools_option_3.innerHTML = "Item 3";
         tools_option_3.id = "tools_option_3";
+        tools_option_3.style.padding = "5px";
+        tools_option_3.onmouseover = function(){
+            tools_option_3.style.color = "Black";
+            tools_option_3.style.backgroundColor = "LightGray";
+        };
+        tools_option_3.onmouseout = function() {
+            tools_option_3.style.color = "White";
+            tools_option_3.style.backgroundColor = "Gray";
+        };
 
-        tools_list.appendChild(tools_option_1);
-        tools_list.appendChild(tools_option_2);
-        tools_list.appendChild(tools_option_3);
+        var tools_row_3 = document.createElement("tr");
+        tools_row_3.appendChild(tools_option_3);
+
+        tools_list.appendChild(tools_row_1);
+        tools_list.appendChild(tools_row_2);
+        tools_list.appendChild(tools_row_3);
 
         tools_menu.appendChild(tools_list);
 
@@ -278,38 +384,74 @@ var Gsettings, Ganttable = {
         help_menu.style.visibility = "hidden";
         help_menu.style.position = "absolute";
         help_menu.style.margin = "0px";
+        help_menu.style.marginTop = "1px";
+        help_menu.style.marginLeft = "-1px";
         help_menu.style.padding = "0px";
-        help_menu.style.backgroundColor = "#EAEBD8";
-        help_menu.style.border = "1px solid #5970B2";
-        help_menu.style.textAlign = "left";
-        help_menu.style.display = "block";
-        help_menu.style.whiteSpace = "nowrap";
+        help_menu.style.backgroundColor = "Gray";
         help_menu.id = "help_menu";
 
-        var help_list = document.createElement("ul");
-        help_list.style.listStyle = "none";
-        help_list.style.margin = "5px";
-        help_list.style.padding = "0px";
+        var help_list = document.createElement("table");
         help_list.id = "help_list";
+        help_list.style.color = "White";
+        help_list.style.width = "100%";
+        help_list.style.border = "none";
+        help_list.style.borderSpacing = "0px";
+
 
         //TBD
-        var help_option_1 = document.createElement("li");
+        var help_option_1 = document.createElement("td");
         help_option_1.innerHTML = "Item 1";
         help_option_1.id = "help_option_1";
+        help_option_1.style.padding = "5px";
+        help_option_1.onmouseover = function(){
+            help_option_1.style.color = "Black";
+            help_option_1.style.backgroundColor = "LightGray";
+        };
+        help_option_1.onmouseout = function() {
+            help_option_1.style.color = "White";
+            help_option_1.style.backgroundColor = "Gray";
+        };
 
         //TBD
-        var help_option_2 = document.createElement("li");
+        var help_option_2 = document.createElement("td");
         help_option_2.innerHTML = "Item 2";
         help_option_2.id = "help_option_2";
+        help_option_2.style.padding = "5px";
+        help_option_2.onmouseover = function(){
+            help_option_2.style.color = "Black";
+            help_option_2.style.backgroundColor = "LightGray";
+        };
+        help_option_2.onmouseout = function() {
+            help_option_2.style.color = "White";
+            help_option_2.style.backgroundColor = "Gray";
+        };
 
         //TBD
-        var help_option_3 = document.createElement("li");
+        var help_option_3 = document.createElement("td");
         help_option_3.innerHTML = "Item 3";
         help_option_3.id = "help_option_3";
+        help_option_3.style.padding = "5px";
+        help_option_3.onmouseover = function(){
+            help_option_3.style.color = "Black";
+            help_option_3.style.backgroundColor = "LightGray";
+        };
+        help_option_3.onmouseout = function() {
+            help_option_3.style.color = "White";
+            help_option_3.style.backgroundColor = "Gray";
+        };
 
-        help_list.appendChild(help_option_1);
-        help_list.appendChild(help_option_2);
-        help_list.appendChild(help_option_3);
+        var help_row_1 = document.createElement("tr");
+        help_row_1.appendChild(help_option_1);
+
+        var help_row_2 = document.createElement("tr");
+        help_row_2.appendChild(help_option_2);
+
+        var help_row_3 = document.createElement("tr");
+        help_row_3.appendChild(help_option_3);
+
+        help_list.appendChild(help_row_1);
+        help_list.appendChild(help_row_2);
+        help_list.appendChild(help_row_3);
 
         help_menu.appendChild(help_list);
 

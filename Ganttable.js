@@ -78,6 +78,8 @@ var Gsettings, Ganttable = {
         //setup container UI
         this.setupUI();
 
+        this.setupGrid();
+
         //this.setupGantt();
 
         //Gsettings = this.settings;
@@ -125,6 +127,7 @@ var Gsettings, Ganttable = {
         file.innerHTML = "File";
         file.style.color = "White";
         file.style.textAlign = "Center";
+        file.style.cursor = "pointer";
 
         var file_menu = document.createElement("div");
         file_menu.style.visibility = "hidden";
@@ -135,6 +138,7 @@ var Gsettings, Ganttable = {
         file_menu.style.padding = "0px";
         file_menu.style.backgroundColor = "Gray";
         file_menu.id = "file_menu";
+        file_menu.style.cursor = "pointer";
 
         var file_list = document.createElement("table");
         file_list.id = "file_list";
@@ -210,6 +214,7 @@ var Gsettings, Ganttable = {
         edit.innerHTML = "Edit";
         edit.style.color = "White";
         edit.style.textAlign = "Center";
+        edit.style.cursor = "pointer";
 
         var edit_menu = document.createElement("div");
         edit_menu.style.visibility = "hidden";
@@ -220,6 +225,7 @@ var Gsettings, Ganttable = {
         edit_menu.style.padding = "0px";
         edit_menu.style.backgroundColor = "Gray";
         edit_menu.id = "edit_menu";
+        edit_menu.style.cursor = "pointer";
 
         var edit_list = document.createElement("table");
         edit_list.id = "edit_list";
@@ -295,6 +301,7 @@ var Gsettings, Ganttable = {
         tools.innerHTML = "Tools";
         tools.style.color = "White";
         tools.style.textAlign = "Center";
+        tools.style.cursor = "pointer";
 
         var tools_menu = document.createElement("div");
         tools_menu.style.visibility = "hidden";
@@ -305,6 +312,7 @@ var Gsettings, Ganttable = {
         tools_menu.style.padding = "0px";
         tools_menu.style.backgroundColor = "Gray";
         tools_menu.id = "tools_menu";
+        tools_menu.style.cursor = "pointer";
 
         var tools_list = document.createElement("table");
         tools_list.id = "tools_list";
@@ -379,6 +387,7 @@ var Gsettings, Ganttable = {
         help.innerHTML = "Help";
         help.style.color = "White";
         help.style.textAlign = "Center";
+        help.style.cursor = "pointer";
 
         var help_menu = document.createElement("div");
         help_menu.style.visibility = "hidden";
@@ -389,6 +398,7 @@ var Gsettings, Ganttable = {
         help_menu.style.padding = "0px";
         help_menu.style.backgroundColor = "Gray";
         help_menu.id = "help_menu";
+        help_menu.style.cursor = "pointer";
 
         var help_list = document.createElement("table");
         help_list.id = "help_list";
@@ -457,10 +467,11 @@ var Gsettings, Ganttable = {
 
         help.appendChild(help_menu);
 
-        var devoid = document.createElement("td");
-        devoid.id = "devoid";
-        devoid.style.backgroundColor = "Black";
-        devoid.style.width = "auto";
+        //menu_devoid takes up the empty space to effectively left align the menu
+        var menu_devoid = document.createElement("td");
+        menu_devoid.id = "menu_devoid";
+        menu_devoid.style.backgroundColor = "Black";
+        menu_devoid.style.width = "auto";
 
         file.onmouseover = function() { Ganttable.showMenu(file_menu.id); };
         file.onmouseout = function() { Ganttable.hideMenu(); };
@@ -479,7 +490,7 @@ var Gsettings, Ganttable = {
         menubar.appendChild(edit);
         menubar.appendChild(tools);
         menubar.appendChild(help);
-        menubar.appendChild(devoid);
+        menubar.appendChild(menu_devoid);
 
         grid.appendChild(menubar);
 
@@ -489,6 +500,100 @@ var Gsettings, Ganttable = {
         //set offsets
         this.globals.cw = this.container.offsetWidth;
         this.globals.ch = this.container.offsetHeight;
+    },
+
+    setupGrid: function () {
+
+        //main app grid
+        var app = document.createElement("table");
+        app.style.width = "100%";
+
+        //contextbar controls current grid timeline context
+        var contextbar = document.createElement("tr");
+        contextbar.id = "contextbar";
+        contextbar.style.color = "White";
+        contextbar.style.height = "20px";
+
+        //context_devoid basically takes up the remaining space to right align the context options
+        var context_devoid = document.createElement("td");
+        context_devoid.id = "context_devoid";
+        context_devoid.style.backgroundColor = "LightBlue";
+        context_devoid.style.width = "auto";
+
+        var day_context = document.createElement("td");
+        day_context.id = "day_context";
+        day_context.style.backgroundColor = "LightBlue";
+        day_context.style.width = "60px";
+        day_context.innerHTML = "Day";
+        day_context.style.color = "White";
+        day_context.style.textAlign = "Center";
+        day_context.style.cursor = "pointer";
+        day_context.onmouseover = function() {
+            day_context.style.backgroundColor = "Blue";
+        };
+        day_context.onmouseout = function() {
+            day_context.style.backgroundColor = "LightBlue";
+        };
+
+        var week_context = document.createElement("td");
+        week_context.id = "day_context";
+        week_context.style.backgroundColor = "LightBlue";
+        week_context.style.width = "60px";
+        week_context.innerHTML = "Week";
+        week_context.style.color = "White";
+        week_context.style.textAlign = "Center";
+        week_context.style.cursor = "pointer";
+        week_context.onmouseover = function() {
+            week_context.style.backgroundColor = "Blue";
+        };
+        week_context.onmouseout = function() {
+            week_context.style.backgroundColor = "LightBlue";
+        };
+
+        var month_context = document.createElement("td");
+        month_context.id = "day_context";
+        month_context.style.backgroundColor = "LightBlue";
+        month_context.style.width = "60px";
+        month_context.innerHTML = "Month";
+        month_context.style.color = "White";
+        month_context.style.textAlign = "Center";
+        month_context.style.cursor = "pointer";
+        month_context.onmouseover = function() {
+            month_context.style.backgroundColor = "Blue";
+        };
+        month_context.onmouseout = function() {
+            month_context.style.backgroundColor = "LightBlue";
+        };
+
+        var quarter_context = document.createElement("td");
+        quarter_context.id = "day_context";
+        quarter_context.style.backgroundColor = "LightBlue";
+        quarter_context.style.width = "60px";
+        quarter_context.innerHTML = "Quarter";
+        quarter_context.style.color = "White";
+        quarter_context.style.textAlign = "Center";
+        quarter_context.style.cursor = "pointer";
+        quarter_context.onmouseover = function() {
+            quarter_context.style.backgroundColor = "Blue";
+        };
+        quarter_context.onmouseout = function() {
+            quarter_context.style.backgroundColor = "LightBlue";
+        };
+
+        contextbar.appendChild(context_devoid);
+        contextbar.appendChild(day_context);
+        contextbar.appendChild(week_context);
+        contextbar.appendChild(month_context);
+        contextbar.appendChild(quarter_context);
+
+        app.appendChild(contextbar);
+
+        this.container.appendChild(app);
+
+        var task_pane = document.createElement("div");
+
+        var gantt_pane = document.createElement("div");
+
     },
 
     showMenu: function(id){

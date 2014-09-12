@@ -7,7 +7,8 @@ var Gsettings, Ganttable = {
     settings: {
         theme: "standard",
         container: null,
-        db: null
+        db: null,
+        defaultContext: 0
     },
 
     constants: {
@@ -73,12 +74,12 @@ var Gsettings, Ganttable = {
     init: function () {
         console.log("init");
 
-        this.container = $("#Ganttable")[0];
+        Ganttable.settings.container = $("#Ganttable")[0];
 
         //setup container UI
-        this.setupUI();
+        Ganttable.setupUI();
 
-        this.setupGrid();
+        Ganttable.setupGrid();
 
         //this.setupGantt();
 
@@ -94,14 +95,14 @@ var Gsettings, Ganttable = {
         //set margin of main container
         //this.container.style.margin = "2px";
         //set width of main container
-        this.container.style.width = "100%";
-        this.container.style.margin = "0px";
+        Ganttable.settings.container.style.width = "100%";
+        Ganttable.settings.container.style.margin = "0px";
 
         //append gantt grid
-        var grid = document.createElement("table");
+        var menu_grid = document.createElement("table");
 
-        grid.style.border = 1;
-        grid.style.width = "100%";
+        menu_grid.style.border = 1;
+        menu_grid.style.width = "100%";
 
         //row for the entire menu bar
         var menubar = document.createElement("tr");
@@ -492,21 +493,13 @@ var Gsettings, Ganttable = {
         menubar.appendChild(help);
         menubar.appendChild(menu_devoid);
 
-        grid.appendChild(menubar);
+        menu_grid.appendChild(menubar);
 
-        //append the grid to the Ganttable div
-        this.container.appendChild(grid);
 
-        //set offsets
-        this.globals.cw = this.container.offsetWidth;
-        this.globals.ch = this.container.offsetHeight;
-    },
+        //----------CONTEXT MENU
 
-    setupGrid: function () {
-
-        //main app grid
-        var app = document.createElement("table");
-        app.style.width = "100%";
+        var context_grid = document.createElement("table");
+        context_grid.style.width = "100%";
 
         //contextbar controls current grid timeline context
         var contextbar = document.createElement("tr");
@@ -586,13 +579,50 @@ var Gsettings, Ganttable = {
         contextbar.appendChild(month_context);
         contextbar.appendChild(quarter_context);
 
-        app.appendChild(contextbar);
+        context_grid.appendChild(contextbar);
 
-        this.container.appendChild(app);
 
-        var task_pane = document.createElement("div");
+        //---------------------------------
 
-        var gantt_pane = document.createElement("div");
+        //append the grid to the Ganttable div
+        Ganttable.settings.container.appendChild(menu_grid);
+        Ganttable.settings.container.appendChild(context_grid);
+
+        //set offsets
+        Ganttable.globals.cw = Ganttable.settings.container.offsetWidth;
+        Ganttable.globals.ch = Ganttable.settings.container.offsetHeight;
+    },
+
+    setupGrid: function () {
+
+        //main app grid
+        var app = document.createElement("table");
+        app.style.tableLayout = "fixed";
+        app.style.width = "100%";
+        app.id = "app";
+
+        var context_row = document.createElement("tr");
+        context_row.id = "context_row";
+
+        var search_box = document.createElement("td");
+        search_box.id = "search_box";
+        search_box.innerHTML = "Search";
+        search_box.style.width = "400px";
+
+        var context_area = document.createElement("div");
+        context_area.id = "context_area";
+        context_area.style.overflow = "auto";
+
+        context_row.appendChild(search_box);
+        context_row.appendChild(context_area);
+
+        app.appendChild(context_row);
+
+        Ganttable.settings.container.appendChild(app);
+
+        //set default context
+        Ganttable.adjustContext(this.settings.defaultContext);
+
 
     },
 
@@ -612,6 +642,87 @@ var Gsettings, Ganttable = {
 
     hideMenu: function() {
         if(this.globals.lastMenu) { this.globals.lastMenu.style.visibility = "hidden"; }
+    },
+
+    adjustContext: function(context){
+        switch(context){
+            case 0:
+                Ganttable.clearContext();
+                Ganttable.setDayContext();
+                break;
+            case 1:
+                Ganttable.clearContext();
+                Ganttable.setWeekContext();
+                break;
+            case 2:
+                Ganttable.clearContext();
+                Ganttable.setMonthContext();
+                break;
+            case 3:
+                Ganttable.clearContext();
+                Ganttable.setQuarterContext();
+                break;
+            default: console.log("wtf");
+                break;
+        }
+    },
+
+    clearContext: function() {
+        //clear the current timeline context
+        var context_area = document.getElementById("context_area");
+        while(context_area.children.length > 0){
+            context_area.removeChild(context_area.children[0]);
+        }
+    },
+
+    setDayContext: function(){
+        //set the timeline context to "day"
+
+        var context_area = document.getElementById("context_area");
+        var monthInfo = Ganttable.constants.MONTHS[new Date().getMonth()];
+
+        for(var i = 0; i < monthInfo[1]; i++){
+            //temp day object
+            var date = new Date(new Date().getFullYear(),
+                                new Date().getMonth() + Ganttable.nav.dCnt,
+                                (i + 1));
+
+            //create a day node
+            var node = document.createElement("td");
+            //create an id with the UTC date for that day
+            node.id = Date.UTC(new Date().getFullYear(),
+                                    new Date().getMonth() + Ganttable.nav.dCnt,
+                                    (i + 1));
+
+            node.style.textAlign = "center";
+            node.style.width = "60px";
+
+            var daySpan = document.createElement("span");
+            daySpan.style.fontSize = "1em";
+            daySpan.innerHTML = (i + 1);
+
+            var dowSpan = document.createElement("span");
+            dowSpan.style.fontSize = "1em";
+            dowSpan.style.fontWeight = "bold";
+            dowSpan.innerHTML = Ganttable.constants.DAYS[date.getDay()];
+
+            node.appendChild(dowSpan);
+            node.appendChild(daySpan);
+
+            context_area.appendChild(node);
+        }
+    },
+
+    setWeekContext: function(){
+
+    },
+
+    setMonthContext: function(){
+
+    },
+
+    setQuarterContext: function(){
+
     }
 
 };

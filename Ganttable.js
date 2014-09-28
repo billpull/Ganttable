@@ -97,11 +97,11 @@ var Gsettings, Ganttable = {
         //set width of main container
         Ganttable.settings.container.style.width = "100%";
         Ganttable.settings.container.style.margin = "0px";
+        Ganttable.settings.container.style.display = "block";
 
         //append gantt grid
         var menu_grid = document.createElement("table");
 
-        menu_grid.style.border = 1;
         menu_grid.style.width = "100%";
 
         //row for the entire menu bar
@@ -600,14 +600,19 @@ var Gsettings, Ganttable = {
         app.style.tableLayout = "fixed";
         app.style.width = "100%";
         app.id = "app";
+        app.style.borderSpacing = "0px";
+        app.style.padding = "2px";
+
 
         var context_row = document.createElement("tr");
         context_row.id = "context_row";
+        context_row.style.width = "100%";
 
         var search_box = document.createElement("td");
         search_box.id = "search_box";
         search_box.innerHTML = "Search";
-        search_box.style.width = "400px";
+        search_box.style.width = "300px";
+        search_box.style.border = "1px solid #999";
 
         var context_area = document.createElement("div");
         context_area.id = "context_area";
@@ -695,7 +700,8 @@ var Gsettings, Ganttable = {
                                     (i + 1));
 
             node.style.textAlign = "center";
-            node.style.width = "60px";
+            node.style.minWidth = "50px";
+            node.style.border = "1px solid #999";
 
             var daySpan = document.createElement("span");
             daySpan.style.fontSize = "1em";
